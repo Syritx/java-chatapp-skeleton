@@ -26,8 +26,10 @@ public class Client {
 
     public static void sendMessage(String message) {
         try {
-            PrintStream stream =  new PrintStream(client.getOutputStream());
+            PrintStream stream = new PrintStream(client.getOutputStream());
             stream.println(message);
+            stream.flush();
+            stream.close();
         }
         catch (IOException e) {}
     }
