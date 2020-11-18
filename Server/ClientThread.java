@@ -13,21 +13,12 @@ public class ClientThread extends Thread {
 
     public void run() {
         // Reads messages from the client
-
-        while (client.isConnected()) {
+        while (true) {
             try {
                 InputStreamReader reader = new InputStreamReader(client.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(reader);
-
-                for (Socket s : Server.clientSockets) {
-                    if (s != client) {
-                        try {
-                            PrintWriter printWriter = new PrintWriter(s.getOutputStream());
-                            printWriter.write(bufferedReader.readLine());
-                        }
-                        catch(Exception e) {}
-                    }
-                }
+                System.out.println(bufferedReader.readLine());
+                Server.sendMessagesToAllClients(client, bufferedReader.readLine());
             }
             catch (IOException e) {}
         }
